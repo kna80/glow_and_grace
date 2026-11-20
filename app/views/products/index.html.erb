@@ -1,2 +1,303 @@
-<h1>Products#index</h1>
-<p>Find me in app/views/products/index.html.erb</p>
+<style>
+  body {
+    margin: 0;
+    background: #fff8fb;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #ffd6e7, #fff0f6);
+    text-align: center;
+    padding: 85px 20px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    color: #a83265;
+    margin-bottom: 15px;
+  }
+
+  .hero p {
+    font-size: 19px;
+    color: #70445a;
+  }
+
+  .shop-btn {
+    display: inline-block;
+    background: #b83b72;
+    color: white;
+    padding: 14px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin-top: 20px;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 45px 20px;
+  }
+
+  .section-title {
+    text-align: center;
+    color: #a83265;
+    font-size: 30px;
+    margin-bottom: 30px;
+  }
+
+  .categories,
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+  }
+
+  .card h3 {
+    color: #a83265;
+  }
+
+  .card a {
+    color: #b83b72;
+    text-decoration: none;
+  }
+
+  .price {
+    font-weight: bold;
+    font-size: 20px;
+    color: #a83265;
+  }
+
+  .search-box {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 35px;
+  }
+
+  .search-box input,
+  .search-box select {
+    padding: 12px;
+    border: 1px solid #e7b4cb;
+    border-radius: 8px;
+  }
+
+  .search-box button {
+    background: #b83b72;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    cursor: pointer;
+  }
+
+  footer {
+    background: #a83265;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+  }
+  /* Improved Glow & Grace Colors */
+
+body {
+  background: #fff7fa;
+  color: #29212a;
+}
+
+/* Hero Section */
+
+.hero {
+  background: linear-gradient(135deg, #ffd6e7, #ffeaf2);
+}
+
+.hero h1 {
+  color: #861b4c;
+  font-weight: 800;
+}
+
+.hero p {
+  color: #52243b;
+  font-weight: 500;
+}
+
+/* Buttons */
+
+.shop-btn,
+a.shop-btn,
+input.shop-btn {
+  display: inline-block;
+  background: #9d174d;
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+.shop-btn:hover,
+a.shop-btn:hover {
+  background: #701039;
+  color: #ffffff !important;
+}
+
+/* Category Cards */
+
+.card {
+  background: #ffffff;
+  border: 1px solid #f2d4df;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 6px 22px rgba(120, 25, 65, 0.12);
+}
+
+.card h3 {
+  color: #861b4c;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.card p {
+  color: #40323a;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.card a:not(.shop-btn) {
+  color: #8c1647;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.card a:hover {
+  color: #5f0c2d;
+}
+
+/* Product Prices */
+
+.price {
+  color: #861b4c !important;
+  font-size: 23px;
+  font-weight: 800;
+}
+
+/* Section Headings */
+
+.section-title {
+  color: #861b4c;
+  font-weight: 800;
+}
+
+/* Search */
+
+.search-box input,
+.search-box select {
+  background: white;
+  color: #29212a;
+  border: 2px solid #d88eae;
+}
+
+.search-box input:focus,
+.search-box select:focus {
+  outline: 2px solid #9d174d;
+}
+
+/* Footer */
+
+footer {
+  background: #861b4c;
+  color: white;
+}
+</style>
+
+<section class="hero">
+  <h1>Glow & Grace 💗</h1>
+  <p>Discover Your Natural Beauty</p>
+  <p>Premium Skincare, Makeup, Haircare & Beauty Essentials</p>
+
+  <a href="#shop" class="shop-btn">Shop Now</a>
+</section>
+
+<div class="container">
+
+  <h2 class="section-title">Shop By Category</h2>
+
+  <div class="categories">
+    <% @categories.each do |category| %>
+      <div class="card">
+        <h3><%= category.name %></h3>
+        <p><%= category.description %></p>
+        <%= link_to "Explore Collection", category_path(category) %>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+
+<div class="container" id="shop">
+
+  <h2 class="section-title">Our Beauty Collection</h2>
+
+  <%= form_with url: products_path, method: :get, local: true, class: "search-box" do %>
+
+    <%= text_field_tag :search, params[:search],
+        placeholder: "Search beauty products..." %>
+
+    <%= select_tag :category_id,
+        options_from_collection_for_select(
+          @categories,
+          :id,
+          :name,
+          params[:category_id]
+        ),
+        include_blank: "All Categories" %>
+
+    <%= submit_tag "Search", class: "shop-btn" %>
+
+  <% end %>
+
+  <div class="products">
+
+    <% @products.each do |product| %>
+
+      <div class="card">
+
+        <h3><%= product.name %></h3>
+
+        <p><%= truncate(product.description, length: 90) %></p>
+
+        <p class="price">
+          <%= number_to_currency(product.price) %>
+        </p>
+
+        <p>
+          <%= product.category.name %>
+        </p>
+
+        <%= link_to "View Product", product_path(product),
+            class: "shop-btn" %>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 Glow & Grace Beauty Store</p>
+  <p>Beauty • Confidence • Elegance</p>
+</footer>

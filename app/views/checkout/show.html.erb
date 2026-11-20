@@ -1,0 +1,135 @@
+<style>
+  .invoice-page {
+    background: #fff6fa;
+    min-height: 100vh;
+    padding: 50px 20px;
+    font-family: Arial, sans-serif;
+  }
+
+  .invoice-card {
+    max-width: 850px;
+    margin: auto;
+    background: white;
+    padding: 45px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(134, 27, 76, 0.1);
+  }
+
+  .invoice-title {
+    color: #861b4c;
+    text-align: center;
+    font-size: 36px;
+  }
+
+  .invoice-section {
+    background: #fff1f6;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 25px 0;
+  }
+
+  .invoice-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 12px 0;
+  }
+
+  .invoice-total {
+    color: #861b4c;
+    font-size: 27px;
+    font-weight: bold;
+    border-top: 2px solid #e5b6cb;
+    padding-top: 15px;
+  }
+
+  .invoice-button {
+    display: inline-block;
+    background: #98134e;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 25px;
+    text-decoration: none;
+    margin-top: 20px;
+  }
+</style>
+
+<div class="invoice-page">
+  <div class="invoice-card">
+
+    <h1 class="invoice-title">🎉 Glow & Grace Invoice</h1>
+
+    <p><strong>Order Number:</strong> #<%= @order.id %></p>
+    <p><strong>Date:</strong> <%= @order.created_at.strftime("%B %d, %Y") %></p>
+    <p><strong>Status:</strong> <%= @order.status.capitalize %></p>
+
+    <div class="invoice-section">
+      <h2>Customer Details</h2>
+
+      <p><strong>Name:</strong> <%= @order.customer_name %></p>
+      <p><strong>Email:</strong> <%= @order.email %></p>
+      <p><strong>Address:</strong> <%= @order.address %></p>
+
+      <% if @order.customer&.province %>
+        <p>
+          <strong>Province:</strong>
+          <%= @order.customer.province.name %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="invoice-section">
+      <h2>Purchased Products</h2>
+
+      <% @order.order_items.each do |item| %>
+        <div class="invoice-row">
+          <span>
+            <%= item.product.name %> × <%= item.quantity %>
+          </span>
+
+          <span>
+            <%= number_to_currency(item.price * item.quantity) %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="invoice-section">
+      <h2>Payment Summary</h2>
+
+      <div class="invoice-row">
+        <span>Subtotal</span>
+        <span>
+          <%= number_to_currency(@order.subtotal || @order.total) %>
+        </span>
+      </div>
+
+      <div class="invoice-row">
+        <span>GST</span>
+        <span><%= number_to_currency(@order.gst_amount || 0) %></span>
+      </div>
+
+      <div class="invoice-row">
+        <span>PST / QST</span>
+        <span><%= number_to_currency(@order.pst_amount || 0) %></span>
+      </div>
+
+      <div class="invoice-row">
+        <span>HST</span>
+        <span><%= number_to_currency(@order.hst_amount || 0) %></span>
+      </div>
+
+      <div class="invoice-row invoice-total">
+        <span>Total</span>
+        <span><%= number_to_currency(@order.total) %></span>
+      </div>
+    </div>
+
+    <p>Demo order only. No payment has been collected.</p>
+
+    <%= link_to "Continue Shopping",
+                root_path,
+                class: "invoice-button" %>
+
+  </div>
+</div>

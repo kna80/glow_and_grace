@@ -164,3 +164,34 @@ end
 puts "Glow & Grace seed data created successfully!"
 puts "Categories: #{Category.count}"
 puts "Products: #{Product.count}"
+# Canadian Provinces and Territories - Tax Rates
+# Rates are percentages, e.g. 5.0 means 5%.
+
+province_taxes = [
+  ["Alberta", "AB", 5.0, 0.0, 0.0],
+  ["British Columbia", "BC", 5.0, 7.0, 0.0],
+  ["Manitoba", "MB", 5.0, 7.0, 0.0],
+  ["New Brunswick", "NB", 0.0, 0.0, 15.0],
+  ["Newfoundland and Labrador", "NL", 0.0, 0.0, 15.0],
+  ["Northwest Territories", "NT", 5.0, 0.0, 0.0],
+  ["Nova Scotia", "NS", 0.0, 0.0, 14.0],
+  ["Nunavut", "NU", 5.0, 0.0, 0.0],
+  ["Ontario", "ON", 0.0, 0.0, 13.0],
+  ["Prince Edward Island", "PE", 0.0, 0.0, 15.0],
+  ["Quebec", "QC", 5.0, 9.975, 0.0],
+  ["Saskatchewan", "SK", 5.0, 6.0, 0.0],
+  ["Yukon", "YT", 5.0, 0.0, 0.0]
+]
+
+province_taxes.each do |name, code, gst, pst, hst|
+  province = Province.find_or_initialize_by(code: code)
+
+  province.name = name
+  province.gst_rate = gst
+  province.pst_rate = pst
+  province.hst_rate = hst
+
+  province.save!
+end
+
+puts "Canadian provinces created: #{Province.count}"

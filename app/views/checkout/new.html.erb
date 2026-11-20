@@ -1,0 +1,143 @@
+<style>
+  .checkout-page {
+    background: #fff6fa;
+    min-height: 100vh;
+    padding: 50px 20px;
+    font-family: Arial, sans-serif;
+  }
+
+  .checkout-container {
+    max-width: 850px;
+    margin: auto;
+    background: white;
+    padding: 45px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(134, 27, 76, 0.1);
+  }
+
+  .checkout-title {
+    color: #861b4c;
+    text-align: center;
+    font-size: 36px;
+  }
+
+  .checkout-field {
+    margin-bottom: 20px;
+  }
+
+  .checkout-field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .checkout-field input,
+  .checkout-field textarea,
+  .checkout-field select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #dca8bf;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  .checkout-summary {
+    background: #fff1f6;
+    padding: 25px;
+    border-radius: 12px;
+    margin: 25px 0;
+  }
+
+  .checkout-button {
+    background: #98134e;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 17px;
+    cursor: pointer;
+  }
+
+  .checkout-errors {
+    background: #ffe3e8;
+    color: #8b1735;
+    padding: 15px;
+    border-radius: 8px;
+  }
+</style>
+
+<div class="checkout-page">
+  <div class="checkout-container">
+
+    <h1 class="checkout-title">💗 Glow & Grace Checkout</h1>
+
+    <% if @order.errors.any? %>
+      <div class="checkout-errors">
+        <% @order.errors.full_messages.each do |message| %>
+          <p><%= message %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="checkout-summary">
+      <h2>Order Summary</h2>
+
+      <% @cart_items.each do |item| %>
+        <p>
+          <%= item[:product].name %>
+          × <%= item[:quantity] %>
+          — <%= number_to_currency(item[:subtotal]) %>
+        </p>
+      <% end %>
+
+      <h3>
+        Subtotal: <%= number_to_currency(@cart_total) %>
+      </h3>
+
+      <p>Taxes will be calculated based on your selected province.</p>
+    </div>
+
+    <%= form_with model: @order,
+                  url: place_order_path,
+                  method: :post,
+                  local: true do |form| %>
+
+      <div class="checkout-field">
+        <%= form.label :customer_name, "Full Name" %>
+        <%= form.text_field :customer_name, required: true %>
+      </div>
+
+      <div class="checkout-field">
+        <%= form.label :email, "Email Address" %>
+        <%= form.email_field :email, required: true %>
+      </div>
+
+      <div class="checkout-field">
+        <%= form.label :address, "Delivery Address" %>
+        <%= form.text_area :address, rows: 4, required: true %>
+      </div>
+
+      <div class="checkout-field">
+        <%= label_tag :province_id, "Province / Territory" %>
+
+        <%= select_tag :province_id,
+            options_from_collection_for_select(
+              @provinces,
+              :id,
+              :name,
+              params[:province_id]
+            ),
+            prompt: "Select Province",
+            required: true %>
+      </div>
+
+      <%= form.submit "Place Order", class: "checkout-button" %>
+
+    <% end %>
+
+    <p>
+      <%= link_to "← Back to Cart", cart_path %>
+    </p>
+
+  </div>
+</div>

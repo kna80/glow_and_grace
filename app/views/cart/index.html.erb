@@ -1,0 +1,200 @@
+<style>
+  .cart-page {
+    min-height: 100vh;
+    background: #fff6fa;
+    padding: 60px 8%;
+    font-family: Arial, sans-serif;
+    color: #442039;
+  }
+
+  .cart-container {
+    max-width: 1100px;
+    margin: auto;
+  }
+
+  .cart-title {
+    text-align: center;
+    color: #861b4c;
+    font-size: 42px;
+    margin-bottom: 40px;
+  }
+
+  .cart-item {
+    background: white;
+    padding: 30px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    border: 1px solid #f5cddd;
+    box-shadow: 0 10px 25px rgba(134, 27, 76, 0.08);
+  }
+
+  .cart-item h2 {
+    color: #861b4c;
+    margin-bottom: 15px;
+  }
+
+  .cart-price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #a30d50;
+  }
+
+  .cart-form {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .cart-form input {
+    width: 80px;
+    padding: 10px;
+    border: 1px solid #e5a7bf;
+    border-radius: 8px;
+  }
+
+  .cart-btn {
+    display: inline-block;
+    background: #a30d50;
+    color: white !important;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .cart-btn:hover {
+    background: #861b4c;
+  }
+
+  .remove-btn {
+    background: #b42336;
+  }
+
+  .cart-total {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    text-align: right;
+    margin-top: 30px;
+    border: 1px solid #f5cddd;
+  }
+
+  .cart-total h2 {
+    color: #861b4c;
+    font-size: 30px;
+  }
+
+  .empty-cart {
+    text-align: center;
+    background: white;
+    padding: 70px 30px;
+    border-radius: 20px;
+  }
+
+  .cart-message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background: #fce4ec;
+    color: #861b4c;
+  }
+</style>
+
+<div class="cart-page">
+  <div class="cart-container">
+
+    <h1 class="cart-title">🛍️ Your Shopping Cart</h1>
+
+    <% if notice.present? %>
+      <div class="cart-message"><%= notice %></div>
+    <% end %>
+
+    <% if alert.present? %>
+      <div class="cart-message"><%= alert %></div>
+    <% end %>
+
+    <% if @cart_items.empty? %>
+
+      <div class="empty-cart">
+        <h2>Your cart is empty 💗</h2>
+
+        <p>Discover our beautiful collection of beauty essentials.</p>
+
+        <%= link_to "Continue Shopping",
+                    products_path,
+                    class: "cart-btn" %>
+      </div>
+
+    <% else %>
+
+      <% @cart_items.each do |item| %>
+        <% product = item[:product] %>
+
+        <div class="cart-item">
+
+          <h2><%= product.name %></h2>
+
+          <p><%= product.description %></p>
+
+          <p class="cart-price">
+            Price: <%= number_to_currency(product.price) %>
+          </p>
+
+          <p>
+            Subtotal:
+            <strong>
+              <%= number_to_currency(item[:subtotal]) %>
+            </strong>
+          </p>
+
+          <%= form_with url: update_cart_path, method: :patch,
+                        class: "cart-form" do |form| %>
+
+            <%= form.hidden_field :product_id,
+                                  value: product.id %>
+
+            <%= form.label :quantity, "Quantity:" %>
+
+            <%= form.number_field :quantity,
+                                  value: item[:quantity],
+                                  min: 0,
+                                  max: product.stock_quantity %>
+
+            <%= form.submit "Update Quantity",
+                            class: "cart-btn" %>
+
+          <% end %>
+
+          <div style="margin-top: 15px;">
+            <%= button_to "Remove Product",
+                          remove_from_cart_path(product_id: product.id),
+                          method: :delete,
+                          class: "cart-btn remove-btn" %>
+          </div>
+
+        </div>
+
+      <% end %>
+
+      <div class="cart-total">
+
+        <h2>
+          Total: <%= number_to_currency(@cart_total) %>
+        </h2>
+
+        <p>Thank you for shopping with Glow & Grace 💗</p>
+
+        <%= link_to "Continue Shopping",
+                    products_path,
+                    class: "cart-btn" %>
+
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

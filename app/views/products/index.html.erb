@@ -220,6 +220,69 @@ footer {
   background: #861b4c;
   color: white;
 }
+/* Glow & Grace Pagination */
+
+.pagination-container {
+  text-align: center;
+  margin-top: 45px;
+  padding: 25px;
+}
+
+.pagination-info {
+  color: #70445a;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pagination a,
+.pagination .current,
+.pagination .gap {
+  display: inline-block;
+  padding: 11px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.pagination a {
+  background: white;
+  color: #861b4c;
+  border: 1px solid #e7b4cb;
+}
+
+.pagination a:hover {
+  background: #ffe0ec;
+}
+
+.pagination .current {
+  background: #98134e;
+  color: white;
+}
+
+.empty-products {
+  text-align: center;
+  padding: 45px 20px;
+  color: #861b4c;
+}
+
+@media (max-width: 600px) {
+  .pagination-container {
+    padding: 15px 5px;
+  }
+
+  .pagination a,
+  .pagination .current {
+    padding: 9px 12px;
+  }
+}
 </style>
 
 <section class="hero">
@@ -263,7 +326,15 @@ footer {
           params[:category_id]
         ),
         include_blank: "All Categories" %>
-
+<%= select_tag :filter,
+    options_for_select(
+      [
+        ["All Products", ""],
+        ["New Arrivals (Last 3 Days)", "new"],
+        ["Recently Updated", "updated"]
+      ],
+      params[:filter]
+    ) %>
     <%= submit_tag "Search", class: "shop-btn" %>
 
   <% end %>
@@ -293,11 +364,34 @@ footer {
 
     <% end %>
 
-  </div>
+   </div>
+
+  <% if @products.any? %>
+
+    <div class="pagination-container">
+      <p class="pagination-info">
+        Showing
+        <%= @products.offset_value + 1 %>–<%= @products.offset_value + @products.length %>
+        of <%= @products.total_count %> products
+      </p>
+
+      <%= paginate @products, params: {
+  search: params[:search],
+  category_id: params[:category_id],
+  filter: params[:filter]
+} %>
+    </div>
+
+  <% else %>
+
+    <div class="empty-products">
+      <h3>No products found</h3>
+      <p>Try another keyword or category.</p>
+      <%= link_to "View All Products", products_path, class: "shop-btn" %>
+    </div>
+
+  <% end %>
 
 </div>
 
 <footer>
-  <p>© 2026 Glow & Grace Beauty Store</p>
-  <p>Beauty • Confidence • Elegance</p>
-</footer>

@@ -1,2 +1,122 @@
-<h1>Products#show</h1>
-<p>Find me in app/views/products/show.html.erb</p>
+<style>
+  .details-page {
+    min-height: 100vh;
+    background: #fff6fa;
+    padding: 60px 8%;
+    font-family: Arial, sans-serif;
+  }
+
+  .details-container {
+    max-width: 900px;
+    margin: 30px auto;
+    background: white;
+    padding: 50px;
+    border-radius: 22px;
+    border: 1px solid #f4cddd;
+    box-shadow: 0 10px 30px rgba(130, 25, 70, 0.08);
+  }
+
+  .details-title {
+    font-size: 42px;
+    color: #861b4c;
+    margin-bottom: 20px;
+  }
+
+  .details-category {
+    font-size: 18px;
+    color: #654050;
+  }
+
+  .details-description {
+    font-size: 19px;
+    line-height: 1.8;
+    color: #35232b;
+    margin: 30px 0;
+  }
+
+  .details-price {
+    font-size: 34px;
+    font-weight: bold;
+    color: #861b4c;
+    margin-bottom: 20px;
+  }
+
+  .stock-available {
+    color: #147d35;
+    font-weight: bold;
+  }
+
+  .stock-unavailable {
+    color: #b42342;
+    font-weight: bold;
+  }
+
+  .details-button {
+    display: inline-block;
+    background: #98134e;
+    color: white !important;
+    padding: 14px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 25px;
+  }
+
+  .details-button:hover {
+    background: #700d38;
+    color: white !important;
+  }
+
+  .details-back {
+    color: #861b4c;
+    font-weight: bold;
+    text-decoration: none;
+  }
+</style>
+
+<div class="details-page">
+
+  <%= link_to "← Back to Products", root_path, class: "details-back" %>
+
+  <div class="details-container">
+
+    <h1 class="details-title">
+      <%= @product.name %> 💗
+    </h1>
+
+    <p class="details-category">
+      Category:
+      <%= link_to @product.category.name,
+          category_path(@product.category) %>
+    </p>
+
+    <p class="details-description">
+      <%= @product.description %>
+    </p>
+
+    <div class="details-price">
+      <%= number_to_currency(@product.price) %>
+    </div>
+
+    <% if @product.stock_quantity > 0 %>
+
+      <p class="stock-available">
+        ✓ In Stock
+        (<%= @product.stock_quantity %> available)
+      </p>
+
+    <% else %>
+
+      <p class="stock-unavailable">
+        Currently Out of Stock
+      </p>
+
+    <% end %>
+
+    <%= link_to "Continue Shopping",
+        root_path,
+        class: "details-button" %>
+
+  </div>
+
+</div>

@@ -1,0 +1,40 @@
+<nav style="background:#8b1749; padding:18px 30px;
+display:flex; flex-wrap:wrap; align-items:center;
+justify-content:space-between; color:white;">
+
+  <%= link_to "Glow & Grace", root_path,
+      style: "color:white; font-size:24px; font-weight:bold; text-decoration:none;" %>
+
+  <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:center;">
+
+    <%= link_to "Home", root_path, style:"color:white;" %>
+
+    <%= link_to "Products", products_path, style:"color:white;" %>
+
+    <%= link_to "Cart", cart_path, style:"color:white;" %>
+
+    <% if customer_account_signed_in? %>
+
+      <%= link_to "My Account",
+          edit_customer_account_registration_path,
+          style:"color:white;" %>
+
+      <%= button_to "Logout",
+          destroy_customer_account_session_path,
+          method: :delete,
+          style:"background:white; color:#8b1749; border:0; padding:10px 18px; border-radius:20px; cursor:pointer;" %>
+
+    <% else %>
+
+      <%= link_to "Login",
+          new_customer_account_session_path,
+          style:"color:white;" %>
+
+      <%= link_to "Register",
+          new_customer_account_registration_path,
+          style:"color:white;" %>
+
+    <% end %>
+
+  </div>
+</nav>

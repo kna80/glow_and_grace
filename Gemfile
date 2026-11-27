@@ -61,4 +61,4 @@ gem "json", "~> 2.9.1"
 gem "sassc-rails"
 gem "kaminari", "~> 1.3"
 
-gem "minitest", "~> 5.25"
+gem "minitest", "~> 6.1"

@@ -1,6 +1,6 @@
 class CustomerAccount < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, authentication_keys: [:username]
 
   belongs_to :province, optional: true
 

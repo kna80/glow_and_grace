@@ -25,3 +25,8 @@ Things you may want to cover:
 
 ## Project Overview
 Glow and Grace is a Rails beauty e-commerce website with product browsing, customer accounts, shopping cart and checkout.
+
+## Installation
+1. Run bundle install.
+2. Run bin/rails db:prepare.
+3. Run bin/rails server.

@@ -84,3 +84,12 @@ table {
     max-width: 100%;
   }
 }
+@media (max-width: 600px) {
+  .checkout-container {
+    padding: 20px !important;
+  }
+
+  .checkout-title {
+    font-size: 26px !important;
+  }
+}

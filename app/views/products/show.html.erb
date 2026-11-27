@@ -1,3 +1,28 @@
+
+<div style="max-width: 900px; margin: 40px auto; padding: 35px; background: #fff5f8; border-radius: 15px; text-align: center;">
+
+  <% if @product.image.attached? %>
+    <%= image_tag @product.image.variant(resize_to_limit: [800, 800]),
+        alt: @product.name,
+        style: "width: 100%; max-width: 450px; border-radius: 12px;" %>
+  <% else %>
+    <p>No Image Available</p>
+  <% end %>
+
+  <h1 style="color: #a30d50;">
+    <%= @product.name %>
+  </h1>
+
+  <p><%= @product.description %></p>
+
+  <h2 style="color: #a30d50;">
+    <%= number_to_currency(@product.price) %>
+  </h2>
+
+  <p>Category: <%= @product.category.name %></p>
+
+  <p>Available Stock: <%= @product.stock_quantity %></p>
+
 <% if @product.stock_quantity > 0 %>
 
   <%= form_with url: add_to_cart_path, method: :post do |form| %>
@@ -21,3 +46,9 @@
   <% end %>
 
 <% end %>
+  <br><br>
+
+  <%= link_to "Back to All Products", products_path,
+      style: "color: #a30d50; font-weight: bold;" %>
+
+</div>

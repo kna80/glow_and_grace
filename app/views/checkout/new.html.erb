@@ -125,7 +125,7 @@
               @provinces,
               :id,
               :name,
-              params[:province_id]
+              params[:province_id].presence || current_customer_account&.province_id
             ),
             prompt: "Select Province",
             required: true %>

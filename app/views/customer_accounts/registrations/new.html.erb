@@ -21,6 +21,7 @@
     <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
   </div>
 
+  <%= render "customer_accounts/registrations/address_fields", f: f %>
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_11_27_145247) do
+ActiveRecord::Schema[7.2].define(version: 2026_11_27_153644) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -85,9 +85,11 @@ ActiveRecord::Schema[7.2].define(version: 2026_11_27_145247) do
     t.string "city"
     t.string "postal_code"
     t.integer "province_id"
+    t.string "username"
     t.index ["email"], name: "index_customer_accounts_on_email", unique: true
     t.index ["province_id"], name: "index_customer_accounts_on_province_id"
     t.index ["reset_password_token"], name: "index_customer_accounts_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_customer_accounts_on_username", unique: true
   end
 
   create_table "customers", force: :cascade do |t|

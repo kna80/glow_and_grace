@@ -8,6 +8,18 @@ class CheckoutController < ApplicationController
     end
 
     @order = Order.new
+
+    if customer_account_signed_in?
+      account = current_customer_account
+
+      @order.customer_name = account.full_name
+      @order.email = account.email
+      @order.address = [
+        account.address,
+        account.city,
+        account.postal_code
+      ].reject(&:blank?).join(", ")
+    end
     @provinces = Province.order(:name)
   end
 

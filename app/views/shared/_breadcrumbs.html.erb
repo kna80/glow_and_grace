@@ -1,0 +1,25 @@
+<nav aria-label="Breadcrumb" style="padding:15px 25px; background:#fff0f5; color:#8b1749;">
+
+  <%= link_to "Home", root_path %>
+
+  <% if controller_name == "products" && action_name == "show" %>
+    &nbsp; / &nbsp;
+    <%= link_to @product.category.name, category_path(@product.category) %>
+    &nbsp; / &nbsp;
+    <span><%= @product.name %></span>
+
+  <% elsif controller_name == "categories" && action_name == "show" %>
+    &nbsp; / &nbsp;
+    <span><%= @category.name %></span>
+
+  <% elsif controller_name == "cart" %>
+    &nbsp; / &nbsp; Shopping Cart
+
+  <% elsif controller_name == "checkout" %>
+    &nbsp; / &nbsp;
+    <%= link_to "Shopping Cart", cart_path %>
+    &nbsp; / &nbsp; Checkout
+
+  <% end %>
+
+</nav>

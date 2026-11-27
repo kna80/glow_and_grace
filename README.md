@@ -22,3 +22,6 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## Project Overview
+Glow and Grace is a Rails beauty e-commerce website with product browsing, customer accounts, shopping cart and checkout.

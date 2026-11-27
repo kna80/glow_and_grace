@@ -57,7 +57,7 @@ group :test do
 end
 gem "devise"
 gem "activeadmin"
-gem "json", "~> 2.9.1"
+gem "json", "~> 3.2.0"
 gem "sassc-rails"
 gem "kaminari", "~> 1.3"
 

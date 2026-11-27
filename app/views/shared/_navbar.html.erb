@@ -10,7 +10,9 @@ justify-content:space-between; color:white;">
     <%= link_to "Home", root_path, style:"color:white;" %>
 
     <%= link_to "Products", products_path, style:"color:white;" %>
+<%= link_to "About Us", about_path, style:"color:white;" %>
 
+<%= link_to "Contact Us", contact_path, style:"color:white;" %>
     <%= link_to "Cart", cart_path, style:"color:white;" %>
 
     <% if customer_account_signed_in? %>

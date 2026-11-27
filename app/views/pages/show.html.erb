@@ -1,0 +1,15 @@
+<div style="max-width:900px; margin:60px auto;
+            padding:50px; background:#fff0f5;
+            border-radius:20px; text-align:center;">
+
+  <h1 style="color:#8b1749;">
+    <%= @page.title %>
+  </h1>
+
+  <div style="font-size:18px; line-height:1.8;">
+    <%= simple_format(@page.content) %>
+  </div>
+
+  <%= link_to "Back to Home", root_path %>
+
+</div>

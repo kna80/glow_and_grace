@@ -101,3 +101,8 @@ select:focus-visible {
   outline: 3px solid #a30d50;
   outline-offset: 3px;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}

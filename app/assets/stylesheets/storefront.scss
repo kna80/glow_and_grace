@@ -93,3 +93,11 @@ table {
     font-size: 26px !important;
   }
 }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #a30d50;
+  outline-offset: 3px;
+}

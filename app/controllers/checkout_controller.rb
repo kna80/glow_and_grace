@@ -110,9 +110,12 @@ class CheckoutController < ApplicationController
       :customer,
       order_items: :product
     ).find_by!(
-      id: params[:id],
-      id: session[:last_order_id]
+      id: params[:id]
     )
+
+    unless session[:last_order_id].to_i == @order.id
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   private

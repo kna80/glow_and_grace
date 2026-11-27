@@ -187,7 +187,11 @@
         </h2>
 
         <p>Thank you for shopping with Glow & Grace 💗</p>
-
+<div style="margin: 20px 0;">
+  <%= link_to "Proceed to Checkout",
+              checkout_path,
+              class: "cart-btn" %>
+</div>
         <%= link_to "Continue Shopping",
                     products_path,
                     class: "cart-btn" %>

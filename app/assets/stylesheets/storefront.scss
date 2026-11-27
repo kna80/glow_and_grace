@@ -1,0 +1,86 @@
+// Theme variables
+$primary-color: #8b1749;
+$secondary-color: #fff0f5;
+$white: #ffffff;
+$mobile: 768px;
+$tablet: 1024px;
+
+// Reusable mixin
+@mixin mobile-screen {
+  @media screen and (max-width: $mobile) {
+    @content;
+  }
+}
+
+// Storefront navigation
+body > nav {
+  background-color: $primary-color;
+
+  a {
+    color: $white;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  @include mobile-screen {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px !important;
+
+    > div {
+      justify-content: center;
+      gap: 12px !important;
+    }
+  }
+}
+
+// Responsive images
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Responsive forms
+form {
+  max-width: 100%;
+
+  input,
+  select,
+  textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+// Responsive tables
+table {
+  max-width: 100%;
+}
+
+@media screen and (max-width: $tablet) {
+  body {
+    overflow-wrap: break-word;
+  }
+}
+
+@include mobile-screen {
+  h1 {
+    font-size: 28px !important;
+  }
+
+  h2 {
+    font-size: 23px !important;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  button {
+    max-width: 100%;
+  }
+}
